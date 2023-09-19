@@ -6,6 +6,9 @@ require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const port = process.env.PORT || 3000;
 
+// Database
+require("./database/mongoose");
+
 // Define a route handler for the root path "/"
 app.get("/", (req, res) => {
 	res.send("Hello, Express!");
