@@ -9,7 +9,9 @@ const port = process.env.PORT || 3000;
 // Database
 require("./database/mongoose");
 
-// Define a route handler for the root path "/"
+const { routes } = require("./routes");
+app.use(routes);
+
 app.get("/", (req, res) => {
 	res.send("Hello, Express!");
 });
