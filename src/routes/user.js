@@ -1,11 +1,18 @@
-const { signin, getUser, generateNonce } = require("../controllers/user");
+const {
+	signin,
+	getUser,
+	generateNonce,
+	updateUsername,
+} = require("../controllers/user");
 const auth = require("../middlewares/auth");
 
 const router = require("express").Router();
 
+router.post("/signin", signin);
+
 router.get("/", auth, getUser);
 
-router.post("/signin", signin);
+router.post("/updateUsername", auth, updateUsername);
 
 router.post("/generateNonce", generateNonce);
 
