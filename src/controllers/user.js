@@ -3,8 +3,9 @@ const { User } = require("../models/user");
 const { recoverPersonalSignature } = require("@metamask/eth-sig-util");
 
 async function signin(req, res) {
+	console.log("reached sign in", req.body);
 	try {
-		const { sign, nonce } = req.body;
+		const { sign, nonce, displayName } = req.body;
 		console.log(sign, nonce);
 		const recoveredAddress = recoverPersonalSignature({
 			data: "Please approve this message \n \nNonce:\n" + nonce,
