@@ -7,6 +7,7 @@ async function createTemplate(req, res) {
 			user: req.user._id,
 			payload: req.body.payload,
 			name: req.body.name,
+			img: req.body.img,
 		}).save();
 
 		res.send(module);
@@ -80,12 +81,17 @@ async function getPublicTemplates(req, res) {
 }
 
 // not completed
-async function updateTemplateVisibility(req, res) {
+async function updateTemplate(req, res) {
+	const { id } = req.params;
 	try {
-		const templates = await Template.find({ visibility: "public" }).sort({
-			createdAt: -1,
-		});
-		res.send(templates);
+		const template = await Template.updateOne(
+			{ _id: id, user: req.user._id },
+			{
+				img: req.body.img,
+				visibility: req.body.visibility,
+			}
+		);
+		res.send(template);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send({ message: error.message, error: error });
@@ -98,5 +104,5 @@ module.exports = {
 	cloneTemplate,
 	deleteTemplate,
 	getPublicTemplates,
-	updateTemplateVisibility,
+	updateTemplate,
 };

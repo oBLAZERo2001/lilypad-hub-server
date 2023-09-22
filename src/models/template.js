@@ -10,6 +10,9 @@ const TemplateSchema = new mongoose.Schema(
 			type: Object,
 			required: true,
 		},
+		img: {
+			type: String,
+		},
 		name: {
 			type: String,
 		},

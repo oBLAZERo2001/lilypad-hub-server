@@ -4,7 +4,7 @@ const {
 	deleteTemplate,
 	cloneTemplate,
 	getPublicTemplates,
-	updateTemplateVisibility,
+	updateTemplate,
 } = require("../controllers/template");
 const auth = require("../middlewares/auth");
 
@@ -19,6 +19,6 @@ router.delete("/:id", auth, deleteTemplate);
 router.post("/clone/:id", auth, cloneTemplate);
 router.get("/public", auth, getPublicTemplates);
 
-router.patch("/visibility/:id", auth, updateTemplateVisibility);
+router.patch("/updateTemplate/:id", auth, updateTemplate);
 
 module.exports = router;
