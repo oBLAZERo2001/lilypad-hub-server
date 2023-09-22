@@ -13,6 +13,11 @@ const TemplateSchema = new mongoose.Schema(
 		name: {
 			type: String,
 		},
+		visibility: {
+			type: String,
+			required: true,
+			default: "public",
+		},
 	},
 	{
 		timestamps: true,
