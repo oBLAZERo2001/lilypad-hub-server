@@ -71,9 +71,12 @@ async function getPublicTemplates(req, res) {
 		const templates = await Template.find({
 			visibility: "public",
 			name: { $regex: query?.name ? query.name : "", $options: "i" },
-		}).sort({
-			createdAt: -1,
-		});
+		})
+			.populate("user")
+			.sort({
+				createdAt: -1,
+			})
+			.exec();
 		res.send(templates);
 	} catch (error) {
 		console.log(error);
@@ -94,7 +97,6 @@ async function updateTemplate(req, res) {
 			img: req.body.img,
 		};
 	}
-	console.log(updateData, { _id: id, user: req.user._id });
 	try {
 		const template = await Template.updateOne(
 			{ _id: id, user: req.user._id },
