@@ -14,6 +14,9 @@ const TemplateSchema = new mongoose.Schema(
 		img: {
 			type: String,
 		},
+		description: {
+			type: String,
+		},
 		name: {
 			type: String,
 		},
