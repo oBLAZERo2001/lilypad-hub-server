@@ -3,10 +3,8 @@ const { User } = require("../models/user");
 const { recoverPersonalSignature } = require("@metamask/eth-sig-util");
 
 async function signin(req, res) {
-	console.log("reached sign in", req.body);
 	try {
 		const { sign, nonce, displayName } = req.body;
-		console.log(sign, nonce);
 		const recoveredAddress = recoverPersonalSignature({
 			data: "Please approve this message \n \nNonce:\n" + nonce,
 			signature: sign,
@@ -32,6 +30,16 @@ async function signin(req, res) {
 async function getUser(req, res) {
 	try {
 		res.status(200).send(req.user);
+	} catch (error) {
+		res.status(500).send({ message: error.message });
+	}
+}
+
+async function getUserWithAddress(req, res) {
+	try {
+		const user = await User.findOne({ address: req.params.address });
+		if (!user) return res.status(404).send({ message: "Not found!" });
+		res.send(user);
 	} catch (error) {
 		res.status(500).send({ message: error.message });
 	}
@@ -68,4 +76,10 @@ const updateUsername = async (req, res) => {
 		res.status(500).send({ message: error.message });
 	}
 };
-module.exports = { signin, getUser, generateNonce, updateUsername };
+module.exports = {
+	signin,
+	getUser,
+	generateNonce,
+	updateUsername,
+	getUserWithAddress,
+};
