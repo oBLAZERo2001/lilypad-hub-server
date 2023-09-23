@@ -8,6 +8,7 @@ async function createTemplate(req, res) {
 			payload: req.body.payload,
 			name: req.body.name,
 			img: req.body.img,
+			description: req.body.description,
 		}).save();
 
 		res.send(module);
@@ -40,6 +41,7 @@ async function cloneTemplate(req, res) {
 				...newData,
 				payload: cloningData.payload,
 				img: cloningData.img ? cloningData.img : "",
+				description: cloningData.description,
 				user: req.user._id,
 				name: newName,
 			};
@@ -95,6 +97,12 @@ async function updateTemplate(req, res) {
 		updateData = {
 			...updateData,
 			img: req.body.img,
+		};
+	}
+	if (req.body?.description) {
+		updateData = {
+			...updateData,
+			description: req.body.description,
 		};
 	}
 	try {
