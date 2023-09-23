@@ -83,13 +83,21 @@ async function getPublicTemplates(req, res) {
 // not completed
 async function updateTemplate(req, res) {
 	const { id } = req.params;
+	let updateData = {
+		visibility: req.body.visibility,
+	};
+
+	if (req.body?.img) {
+		updateData = {
+			...updateData,
+			img: req.body.img,
+		};
+	}
+	console.log(updateData, { _id: id, user: req.user._id });
 	try {
 		const template = await Template.updateOne(
 			{ _id: id, user: req.user._id },
-			{
-				img: req.body.img,
-				visibility: req.body.visibility,
-			}
+			updateData
 		);
 		res.send(template);
 	} catch (error) {
