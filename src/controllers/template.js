@@ -84,6 +84,23 @@ async function getPublicTemplates(req, res) {
 	}
 }
 
+async function getTemplate(req, res) {
+	try {
+		const template = await Template.findOne({
+			user: req.user._id,
+			_id: req.params.id,
+		})
+			.populate("user")
+			.exec();
+		if (!template)
+			return res.status(404).send({ message: "Template not found!" });
+		res.send(template);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send({ message: error.message, error: error });
+	}
+}
+
 // not completed
 async function updateTemplate(req, res) {
 	const { id } = req.params;
@@ -116,4 +133,5 @@ module.exports = {
 	deleteTemplate,
 	getPublicTemplates,
 	updateTemplate,
+	getTemplate,
 };

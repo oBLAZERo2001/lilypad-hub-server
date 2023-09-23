@@ -5,6 +5,7 @@ const {
 	cloneTemplate,
 	getPublicTemplates,
 	updateTemplate,
+	getTemplate,
 } = require("../controllers/template");
 const auth = require("../middlewares/auth");
 
@@ -13,6 +14,7 @@ const router = require("express").Router();
 router.post("/", auth, createTemplate);
 
 router.get("/", auth, getTemplates);
+router.get("/:id", auth, getTemplate);
 
 router.delete("/:id", auth, deleteTemplate);
 
