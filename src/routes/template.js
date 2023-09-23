@@ -17,7 +17,7 @@ router.get("/", auth, getTemplates);
 router.delete("/:id", auth, deleteTemplate);
 
 router.post("/clone/:id", auth, cloneTemplate);
-router.get("/public", auth, getPublicTemplates);
+router.get("/public", getPublicTemplates);
 
 router.patch("/updateTemplate/:id", auth, updateTemplate);
 
