@@ -39,6 +39,7 @@ async function cloneTemplate(req, res) {
 			newData = {
 				...newData,
 				payload: cloningData.payload,
+				img: cloningData.img ? cloningData.img : "",
 				user: req.user._id,
 				name: newName,
 			};
