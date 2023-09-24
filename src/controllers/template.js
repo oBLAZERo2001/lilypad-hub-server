@@ -49,6 +49,23 @@ async function cloneTemplate(req, res) {
 
 		const module = await new Template(newData).save();
 
+		// incrwasing clone count
+		if (cloningData?.cloneCount)
+			await Template.updateOne(
+				{ _id: cloningId },
+				{
+					cloneCount: cloningData.cloneCount + 1,
+				}
+			);
+		else {
+			await Template.updateOne(
+				{ _id: cloningId },
+				{
+					cloneCount: 1,
+				}
+			);
+		}
+
 		res.send(module);
 	} catch (error) {
 		console.log(error);
@@ -76,7 +93,11 @@ async function getPublicTemplates(req, res) {
 		})
 			.populate("user")
 			.sort({
-				createdAt: -1,
+				[query?.sortType === "date"
+					? "createdAt"
+					: query?.sortType === "clones"
+					? "cloneCount"
+					: "createdAt"]: query?.sortOrder === "old" ? 1 : -1,
 			})
 			.exec();
 		res.send(templates);
