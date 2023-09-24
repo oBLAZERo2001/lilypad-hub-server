@@ -25,6 +25,10 @@ const TemplateSchema = new mongoose.Schema(
 			required: true,
 			default: "public",
 		},
+		cloneCount: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{
 		timestamps: true,
